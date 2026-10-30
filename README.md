@@ -1,6 +1,6 @@
 # NetAudit
 
-**Stop guessing what your Windows box is talking to.** NetAudit answers three questions, per process, in real time: *who* is phoning home, *who* it's talking to, and *how much* data is moving.
+**Stop guessing what your Windows box is talking to.** NetAudit answers three questions, per process, in real time: *who* is phoning home, *who* it's talking to, and *how much* data is moving — including Windows itself.
 
 No kernel driver, no service install, no telemetry of its own. One WinForms executable, ETW kernel events under the hood, .NET Framework 4.8.
 
@@ -17,6 +17,12 @@ Task Manager shows you a total network graph. It doesn't tell you:
 
 NetAudit shows you all of that, in four tabs, with alerts for the interesting stuff.
 
+### See what Windows itself is phoning home
+
+Run it for an hour and you'll see connections you didn't know existed: `svchost` / `System` / `Microsoft Edge` / `SearchIndexer` talking to a rotating list of telemetry endpoints, often over UDP or to CDN IPs that are hard to identify. NetAudit surfaces them per process, timestamps first-seen/last-seen, and exports the IP list so you can review or block them with a few `netsh advfirewall` commands.
+
+It's not a telemetry blocker — it's the audit layer that tells you what to block. Pair it with your own hosts/firewall rules and you finally know what's leaving the box.
+
 ## Features
 
 | | |
@@ -27,6 +33,7 @@ NetAudit shows you all of that, in four tabs, with alerts for the interesting st
 | **Degraded fallback** | Without admin rights it falls back to process IO counters (labeled "estimated" in the UI) — still useful, just approximate. |
 | **One-click exports** | Deduplicated suspicious public-IP list, plus a hosts template with ready-to-paste `netsh advfirewall` commands for blocking those IPs. |
 | **Per-day CSV logs** | Every alert is appended to a dated CSV for later review. |
+| **Telemetry audit** | System processes (svchost / System / Edge / SearchIndexer) are excluded from alerts by default — turn them on in Settings to see exactly what Windows is phoning home. |
 
 ## Quick start
 
